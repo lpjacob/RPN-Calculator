@@ -69,17 +69,20 @@ def equations(operator):
     else: #if it is,pop 2 values from stack
         operand1 = stackPop()
         operand2 = stackPop()
-        if operator == "+":
-            result=add(operand1,operand2)
-        elif operator == "-":
-            result=subtract(operand1,operand2)
-        elif operator == "*":
-            result=multiply(operand1,operand2)
-        elif operator == "/":
-            result=division(operand1,operand2)
+        if operand1 == None or operand2 == None:
+            print("not enough items on stack")
         else:
-            print("Invalid operator") 
-        
+            if operator == "+":
+                result=add(operand1,operand2)
+            elif operator == "-":
+                result=subtract(operand1,operand2)
+            elif operator == "*":
+                result=multiply(operand1,operand2)
+            elif operator == "/":
+                result=division(operand1,operand2)
+            else:
+                print("Invalid operator") 
+            
     return result     
     
 
