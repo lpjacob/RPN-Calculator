@@ -1,4 +1,4 @@
-
+"""
 Program to perform simple calculations using Reverse Polish Notation
 by ljacob1@canterbury.kent.sch.uk
 Purpose: to demonstrate stack operation, RPN and string handling in procedural code,
