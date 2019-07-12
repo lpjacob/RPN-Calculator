@@ -1,5 +1,5 @@
 """
-Program to perform demonstrate a static queue in Python
+Program to demonstrate a static queue in Python
 by ljacob1@canterbury.kent.sch.uk
 Purpose: to demonstrate queue operation, 
 Limitations: WIP - not currently fully tested
