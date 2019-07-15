@@ -52,7 +52,7 @@ def multiply(operand1, operand2, total=0, counter=0):
         return total
 
 def division(operand1, operand2):
-    """return quotient of operands -simulates floor division"""
+    """return quotient of operands"""
     return operand1/operand2
     
 
