@@ -1,4 +1,5 @@
-import operand_queue
+from operand_queue import Queue
+from stack import Stack
 """
 Program to perform simple calculations using Reverse Polish Notation
 by ljacob1@canterbury.kent.sch.uk
@@ -8,31 +9,10 @@ Limitations: WIP - not currently fully tested
 """
 
 """global variables"""
-stack = [] # empty list as stack
-headPointer = 0 #pointer to head of stack
-maxHeight = 5 #constant to set max stack size
 operatorsUsed=("+","-","*","/") #tuple holding operators the program can work with
-
-def stackPush(item):
-    """push item on to stack if not full, increments pointer"""
-    global stack, headPointer
-    if headPointer < maxHeight:
-        stack.append(item)
-        headPointer +=1
-        print("Stack holds",stack)
-    else:
-        print("stack full")
-        
-def stackPop():
-    """returns and removes top item from stack, decrements pointer"""
-    global stack, headPointer
-    removedItem = None #local variable
-    if headPointer >=1:
-        headPointer -=1
-        removedItem = stack.pop(headPointer)  
-    else:
-        print("stack empty")
-    return removedItem
+max_size = 5 # the max size for the stack and queue
+operand_queue = Queue(max_size) # queue object used to store operands
+stack = Stack(max_size) # stack object
 
 def add(operand1, operand2):
     """return sum of operands"""
@@ -68,8 +48,8 @@ def equations(operator):
     if operator not in operatorsUsed:
         print ("Operator",operator, "not recognised. Give up!")
     else: #if it is,pop 2 values from stack
-        operand1 = stackPop()
-        operand2 = stackPop()
+        operand1 = stack.pop()
+        operand2 = stack.pop()
         if operand1 == None or operand2 == None:
             print("not enough items on stack")
         else:
@@ -83,23 +63,21 @@ def equations(operator):
                 result=division(operand1,operand2)
             else:
                 print("Invalid operator") 
-            
     return result     
-    
+
 
 def parseInput(inputString):
     """takes the input string and pushes numbers on stack
     if an operator is found is will call equation function
     returns the result of the equation if not none"""
     result = None #local variable
-    operator = None
-    
+
     inputString = inputString.replace(" ", "") #strip spaces from input
     inputList = inputString.split(",") #create a list where commas are found
     tempString="" #holds characters that will get pushed to stack
     for i in range(0,len(inputList)):
         if inputList[i].isnumeric():#deal with any items that are just operands
-            stackPush(float(inputList[i]))#if value is a number, cast to float and push on stack
+            stack.push(float(inputList[i]))#if value is a number, cast to float and push on stack
         else:
             for character in inputList[i]:
                 if character.isnumeric():
@@ -107,18 +85,15 @@ def parseInput(inputString):
                 else:
                     operand_queue.enqueue(character)#add character to queue in imported file
                     
-            if len(tempString)>0:    
-                stackPush(float(tempString))# if any numbers found, cast to float and push on stack
-            
-    
-    while operand_queue.queueSize() > 0: #iterate through queue
+            if len(tempString) > 0:    
+                stack.push(float(tempString))# if any numbers found, cast to float and push on stack
+
+    while not operand_queue.is_empty(): #iterate through queue until it is empty
         operand = operand_queue.dequeue() #get operator
         result = equations(operand)
         if result != None:
-            stackPush(float(result)) #push result to stack
+            stack.push(float(result)) #push result to stack
     return result
-                   
-        
 
 
 def menu():
