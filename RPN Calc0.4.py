@@ -65,6 +65,13 @@ def equations(operator):
                 print("Invalid operator") 
     return result     
 
+def check_if_float(string_to_check):
+    """Returns whether given string is a float"""
+    try:
+        float(string_to_check)
+        return True
+    except ValueError:
+        return False
 
 def parseInput(inputString):
     """takes the input string and pushes numbers on stack
@@ -76,7 +83,7 @@ def parseInput(inputString):
     inputList = inputString.split(",") #create a list where commas are found
     tempString="" #holds characters that will get pushed to stack
     for i in range(0,len(inputList)):
-        if inputList[i].isnumeric():#deal with any items that are just operands
+        if inputList[i].isnumeric() or check_if_float(inputList[i]):#deal with any items that are just operands
             stack.push(float(inputList[i]))#if value is a number, cast to float and push on stack
         else:
             for character in inputList[i]:
