@@ -126,20 +126,24 @@ def menu():
     
     print("""
             Welcome to the RPN Calculator
+            Type exit to close program or use CTRL+C
             Please enter sums in Postfix notation
             -------------------------------------
                  Example 2,2+ will return 4
             -------------------------------------""")
     while True:
-        inputString = "" #local variables
-        outputString ="The result of "
-        inputString = input("please enter equation and press enter")
-        print("You entered", inputString)
-        result = parseInput(inputString)#call string parser to add to stack
-        outputString = outputString + inputString + " is " + str(result)
-        print(outputString)
+        try:
+            inputString = "" #local variables
+            outputString ="The result of "
+            inputString = input("Please enter equation and press enter: ")
+            if inputString == "exit":
+                break
+            print("You entered", inputString)
+            result = parseInput(inputString)#call string parser to add to stack
+            outputString = outputString + inputString + " is " + str(result)
+            print(outputString)
+        except KeyboardInterrupt:
+            break
 
 if __name__ =="__main__":
     menu()
-
-
