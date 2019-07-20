@@ -5,45 +5,47 @@ Purpose: to demonstrate queue operation,
 Limitations: WIP - not currently fully tested
 """
 
-"""global variables"""
-queue = []
-maxSize = 5 #constant to set max queue size
-tailPointer = 0
+class Queue:
+    """Queue class, allows for a queue like object to be used"""
+    def __init__(self, max_size):
+        self.__max_size = max_size
+        self.__queue_data = []
+        self.__tail_pointer = 0
 
-def queueSize():
-    global queue
-    return len(queue)
-    
+    def queue_Size(self):
+        """Returns the current queue size"""
+        return len(self.__queue_data)
 
-def enqueue(item):
-    """add an item to the tail of the queue if its not full"""
-    global queue, maxSize, tailPointer
-    if tailPointer < maxSize:
-        queue.append(item)
-        tailPointer 
-        print("queue containts", queue)
-    else:
-        print("queue full")
-   
+    def is_empty(self):
+        """Returns whether the queue is empty"""
+        if len(self.__queue_data) > 0:
+            return False
+        return True
 
-def dequeue():
-    global queue, maxSize, headPointer, tailPointer
-    removedItem = None
-    if len(queue)>0:
-        removedItem = queue.pop(0)
-        print("queue containts", queue)
-    else:
-        print("Queue Empty!")
-    return removedItem
+    def enqueue(self, item):
+        """Adds an item into the queue"""
+        if self.__tail_pointer < self.__max_size:
+            self.__queue_data.append(item)
+            print("queue containts", self.__queue_data)
+        else:
+            print("queue full")
 
+    def dequeue(self):
+        """Removes an item from the queue, returns None if empty"""
+        removedItem = None
+        if not self.is_empty():
+            removedItem = self.__queue_data.pop(0)
+            print("queue containts", self.__queue_data)
+        else:
+            print("Queue Empty!")
+        return removedItem
 
 if __name__ =="__main__":
-
-    enqueue("+")
-    enqueue("*")
-    print(dequeue())
-    enqueue("-")
-    print(dequeue())
-    print(dequeue())
-    print(dequeue())
-        
+    queue = Queue(5)
+    queue.enqueue("+")
+    queue.enqueue("*")
+    print(queue.dequeue())
+    queue.enqueue("-")
+    print(queue.dequeue())
+    print(queue.dequeue())
+    print(queue.dequeue())

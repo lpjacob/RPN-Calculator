@@ -1,4 +1,4 @@
-import operand_queue
+from operand_queue import Queue
 """
 Program to perform simple calculations using Reverse Polish Notation
 by ljacob1@canterbury.kent.sch.uk
@@ -12,6 +12,7 @@ stack = [] # empty list as stack
 headPointer = 0 #pointer to head of stack
 maxHeight = 5 #constant to set max stack size
 operatorsUsed=("+","-","*","/") #tuple holding operators the program can work with
+operand_queue = Queue(5) # queue object used to store operands
 
 def stackPush(item):
     """push item on to stack if not full, increments pointer"""
@@ -22,7 +23,7 @@ def stackPush(item):
         print("Stack holds",stack)
     else:
         print("stack full")
-        
+
 def stackPop():
     """returns and removes top item from stack, decrements pointer"""
     global stack, headPointer
@@ -92,7 +93,6 @@ def parseInput(inputString):
     if an operator is found is will call equation function
     returns the result of the equation if not none"""
     result = None #local variable
-    operator = None
     
     inputString = inputString.replace(" ", "") #strip spaces from input
     inputList = inputString.split(",") #create a list where commas are found
@@ -109,16 +109,13 @@ def parseInput(inputString):
                     
             if len(tempString)>0:    
                 stackPush(float(tempString))# if any numbers found, cast to float and push on stack
-            
-    
-    while operand_queue.queueSize() > 0: #iterate through queue
+
+    while not operand_queue.is_empty(): #iterate through queue until it is empty
         operand = operand_queue.dequeue() #get operator
         result = equations(operand)
         if result != None:
             stackPush(float(result)) #push result to stack
     return result
-                   
-        
 
 
 def menu():
